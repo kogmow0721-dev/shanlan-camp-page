@@ -1,0 +1,121 @@
+<title>山嵐營區 週末空位</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap">
+<style>
+/* Layout: 山嵐 = mountain mist. Misty pine-green header band, then one card per weekend, zones stacked inside, forecast strip last. */
+:root{
+  --bg:#eef1ec; --surface:#fbfcfa; --ink:#1d2a24; --muted:#5e6d65; --line:#d9dfd7;
+  --pine:#2f5d4a; --pine-deep:#1f3f33; --lantern:#d98a1f; --lantern-soft:#f6e6c8;
+  --free:#2f7d5a; --low:#c2561d; --taken:#d4dad2; --full:#8a948d;
+  --hero-a:#27493b; --hero-b:#4b7562; --hero-ink:#f3f6f1;
+  --f-display:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --f-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1713; --surface:#18231d; --ink:#e7eee8; --muted:#9bada3; --line:#2a3931;
+  --pine:#7fbf9f; --pine-deep:#a6d6bd; --lantern:#f0b052; --lantern-soft:#3a2d14;
+  --free:#6cc79a; --low:#f08a55; --taken:#2c3a32; --full:#7d8a82;
+  --hero-a:#16281f; --hero-b:#2a4a3a; --hero-ink:#eef4ef; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1713; --surface:#18231d; --ink:#e7eee8; --muted:#9bada3; --line:#2a3931;
+  --pine:#7fbf9f; --pine-deep:#a6d6bd; --lantern:#f0b052; --lantern-soft:#3a2d14;
+  --free:#6cc79a; --low:#f08a55; --taken:#2c3a32; --full:#7d8a82;
+  --hero-a:#16281f; --hero-b:#2a4a3a; --hero-ink:#eef4ef; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.6 var(--f-body);-webkit-text-size-adjust:100%}
+.wrap{max-width:720px;margin:0 auto;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px))}
+.hero{background:linear-gradient(165deg,var(--hero-a),var(--hero-b));color:var(--hero-ink);position:relative;overflow:hidden}
+.hero .wrap{padding-block:34px 56px;position:relative;z-index:1}
+.hero svg.ridge{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:64px;z-index:0}
+.hero svg.ridge path{fill:var(--bg)}
+.hero svg.ridge path.back{fill:var(--bg);opacity:.35}
+.eyebrow{font-size:12px;letter-spacing:.14em;color:var(--lantern);font-weight:700}
+.hero .eyebrow{color:#f3c27a}
+h1{font:700 34px/1.2 var(--f-display);margin:6px 0 8px;letter-spacing:.06em;text-wrap:balance}
+.hero p{margin:0;max-width:30em;opacity:.9}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin:22px 0 0;font-size:13px;opacity:.95}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:8px;border-radius:2px;display:inline-block}
+.legend .a{background:#8fd6b0}.legend .b{background:rgba(255,255,255,.25)}
+main{display:flex;flex-direction:column;gap:20px;padding-block:8px 28px}
+h2{font:700 20px/1.3 var(--f-display);margin:20px 0 0;letter-spacing:.04em}
+.sub{margin:2px 0 0;color:var(--muted);font-size:13px}
+.wk{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 1px 2px rgba(20,40,30,.05),0 8px 24px -12px rgba(20,40,30,.18);overflow:hidden}
+.wkh{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding:16px 18px 12px;border-bottom:1px solid var(--line)}
+.wkh h3{margin:0;font:700 24px/1.2 var(--f-display);font-variant-numeric:tabular-nums}
+.range{font-size:13px;color:var(--muted)}
+.zones{display:grid;grid-template-columns:1fr 1fr;}
+.zone{padding:14px 18px 16px;min-width:0;border-bottom:1px solid var(--line)}
+.zone:nth-child(odd){border-right:1px solid var(--line)}
+.zone:nth-last-child(-n+2){border-bottom:0}
+.zh{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.zh h4{margin:0;font:700 17px/1.3 var(--f-display)}
+.price{font-size:14px;font-weight:700;color:var(--pine);font-variant-numeric:tabular-nums}
+.price small{font-weight:400;color:var(--muted);font-size:12px}
+.zd{margin:0 0 10px;color:var(--muted);font-size:12.5px;line-height:1.45}
+.night{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;padding:4px 0}
+.nl{font-size:12.5px;color:var(--muted);width:3.1em}
+.bar{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:2px;height:10px;min-width:0}
+.bar i{border-radius:2px;background:var(--taken)}
+.bar i.o{background:var(--free)}
+.cnt{font-size:14px;font-variant-numeric:tabular-nums;min-width:3.4em;text-align:right;color:var(--free)}
+.night.low .bar i.o{background:var(--low)}.night.low .cnt{color:var(--low)}
+.night.full .cnt{color:var(--full);font-weight:500}
+@media (max-width:520px){
+  .zones{grid-template-columns:1fr}
+  .zone:nth-child(odd){border-right:0}
+  .zone:nth-last-child(-n+2){border-bottom:1px solid var(--line)}
+  .zone:last-child{border-bottom:0}
+}
+.weather{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:6px 0 4px;overflow:hidden}
+.strip{list-style:none;margin:0;padding:12px 14px 14px;display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+.day{flex:0 0 76px;scroll-snap-align:start;display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 4px 10px;border-radius:12px;border:1px solid transparent;text-align:center}
+.day.we{background:var(--lantern-soft);border-color:color-mix(in srgb,var(--lantern) 40%,transparent)}
+.dn{font-weight:700;font-size:14px}.dd{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.wi{width:34px;height:34px;margin:6px 0 2px;fill:none;stroke:var(--pine);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.day.we .wi{stroke:var(--lantern)}
+.dt{font-size:13px}
+.tmp{font-variant-numeric:tabular-nums;font-size:14px;display:flex;gap:6px}
+.tmp b{font-weight:700}.tmp em{font-style:normal;color:var(--muted)}
+.rn{font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.wnote{padding:0 18px 12px;margin:0;font-size:12.5px;color:var(--muted)}
+.wnote b{color:var(--lantern)}
+footer{padding-bottom:36px;color:var(--muted);font-size:12.5px;line-height:1.7}
+footer p{margin:0 0 4px}
+</style>
+
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow">山嵐營區・訂位狀況</span>
+    <h1>週末還有哪些營位</h1>
+    <p>列出接下來四個週末，週五晚與週六晚各區剩幾個營位。</p>
+    <div class="legend"><span><i class="a"></i>還有空位</span><span><i class="b"></i>已被訂走</span></div>
+  </div>
+  <svg class="ridge" viewBox="0 0 720 64" preserveAspectRatio="none" aria-hidden="true">
+    <path class="back" d="M0 40 L90 14 L170 36 L260 8 L360 38 L450 18 L560 42 L640 20 L720 36 V64 H0Z"/>
+    <path d="M0 54 L80 38 L170 52 L270 30 L370 54 L470 36 L580 54 L660 40 L720 50 V64 H0Z"/>
+  </svg>
+</div>
+
+<div class="wrap">
+<main>
+  <section class="wk" aria-label="11/20到11/21"><header class="wkh"><div><span class="eyebrow">本週末</span><h3>11/20 – 11/21</h3></div><span class="range">週五・週六</span></header><div class="zones"><div class="zone"><div class="zh"><h4>草地</h4><span class="price">$1,200<small>/晚</small></span></div><p class="zd">平坦草地，可停車在旁・共 10 個</p><div class="night ok"><span class="nl">週五晚</span><span class="bar" style="--n:10" role="img" aria-label="10 個營位剩 3 個"><i class="o"></i><i class="o"></i><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 3</b></div><div class="night full"><span class="nl">週六晚</span><span class="bar" style="--n:10" role="img" aria-label="10 個營位剩 0 個"><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">額滿</b></div></div><div class="zone"><div class="zh"><h4>雨棚</h4><span class="price">$1,600<small>/晚</small></span></div><p class="zd">有頂棚，下雨也能搭・共 8 個</p><div class="night ok"><span class="nl">週五晚</span><span class="bar" style="--n:8" role="img" aria-label="8 個營位剩 5 個"><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 5</b></div><div class="night low"><span class="nl">週六晚</span><span class="bar" style="--n:8" role="img" aria-label="8 個營位剩 1 個"><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 1</b></div></div><div class="zone"><div class="zh"><h4>棧板</h4><span class="price">$1,500<small>/晚</small></span></div><p class="zd">木棧板營位，排水好・共 8 個</p><div class="night ok"><span class="nl">週五晚</span><span class="bar" style="--n:8" role="img" aria-label="8 個營位剩 3 個"><i class="o"></i><i class="o"></i><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 3</b></div><div class="night low"><span class="nl">週六晚</span><span class="bar" style="--n:8" role="img" aria-label="8 個營位剩 1 個"><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 1</b></div></div><div class="zone"><div class="zh"><h4>車泊</h4><span class="price">$1,000<small>/晚</small></span></div><p class="zd">車子停在營位上，可接電・共 6 個</p><div class="night ok"><span class="nl">週五晚</span><span class="bar" style="--n:6" role="img" aria-label="6 個營位剩 3 個"><i class="o"></i><i class="o"></i><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 3</b></div><div class="night full"><span class="nl">週六晚</span><span class="bar" style="--n:6" role="img" aria-label="6 個營位剩 0 個"><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">額滿</b></div></div></div></section><section class="wk" aria-label="11/27到11/28"><header class="wkh"><div><span class="eyebrow">下週末</span><h3>11/27 – 11/28</h3></div><span class="range">週五・週六</span></header><div class="zones"><div class="zone"><div class="zh"><h4>草地</h4><span class="price">$1,200<small>/晚</small></span></div><p class="zd">平坦草地，可停車在旁・共 10 個</p><div class="night low"><span class="nl">週五晚</span><span class="bar" style="--n:10" role="img" aria-label="10 個營位剩 1 個"><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 1</b></div><div class="night full"><span class="nl">週六晚</span><span class="bar" style="--n:10" role="img" aria-label="10 個營位剩 0 個"><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">額滿</b></div></div><div class="zone"><div class="zh"><h4>雨棚</h4><span class="price">$1,600<small>/晚</small></span></div><p class="zd">有頂棚，下雨也能搭・共 8 個</p><div class="night low"><span class="nl">週五晚</span><span class="bar" style="--n:8" role="img" aria-label="8 個營位剩 2 個"><i class="o"></i><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 2</b></div><div class="night low"><span class="nl">週六晚</span><span class="bar" style="--n:8" role="img" aria-label="8 個營位剩 2 個"><i class="o"></i><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 2</b></div></div><div class="zone"><div class="zh"><h4>棧板</h4><span class="price">$1,500<small>/晚</small></span></div><p class="zd">木棧板營位，排水好・共 8 個</p><div class="night low"><span class="nl">週五晚</span><span class="bar" style="--n:8" role="img" aria-label="8 個營位剩 2 個"><i class="o"></i><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 2</b></div><div class="night low"><span class="nl">週六晚</span><span class="bar" style="--n:8" role="img" aria-label="8 個營位剩 1 個"><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 1</b></div></div><div class="zone"><div class="zh"><h4>車泊</h4><span class="price">$1,000<small>/晚</small></span></div><p class="zd">車子停在營位上，可接電・共 6 個</p><div class="night low"><span class="nl">週五晚</span><span class="bar" style="--n:6" role="img" aria-label="6 個營位剩 2 個"><i class="o"></i><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 2</b></div><div class="night low"><span class="nl">週六晚</span><span class="bar" style="--n:6" role="img" aria-label="6 個營位剩 1 個"><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 1</b></div></div></div></section><section class="wk" aria-label="12/4到12/5"><header class="wkh"><div><span class="eyebrow">兩週後</span><h3>12/4 – 12/5</h3></div><span class="range">週五・週六</span></header><div class="zones"><div class="zone"><div class="zh"><h4>草地</h4><span class="price">$1,200<small>/晚</small></span></div><p class="zd">平坦草地，可停車在旁・共 10 個</p><div class="night ok"><span class="nl">週五晚</span><span class="bar" style="--n:10" role="img" aria-label="10 個營位剩 5 個"><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 5</b></div><div class="night low"><span class="nl">週六晚</span><span class="bar" style="--n:10" role="img" aria-label="10 個營位剩 2 個"><i class="o"></i><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 2</b></div></div><div class="zone"><div class="zh"><h4>雨棚</h4><span class="price">$1,600<small>/晚</small></span></div><p class="zd">有頂棚，下雨也能搭・共 8 個</p><div class="night low"><span class="nl">週五晚</span><span class="bar" style="--n:8" role="img" aria-label="8 個營位剩 2 個"><i class="o"></i><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 2</b></div><div class="night full"><span class="nl">週六晚</span><span class="bar" style="--n:8" role="img" aria-label="8 個營位剩 0 個"><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">額滿</b></div></div><div class="zone"><div class="zh"><h4>棧板</h4><span class="price">$1,500<small>/晚</small></span></div><p class="zd">木棧板營位，排水好・共 8 個</p><div class="night ok"><span class="nl">週五晚</span><span class="bar" style="--n:8" role="img" aria-label="8 個營位剩 6 個"><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 6</b></div><div class="night low"><span class="nl">週六晚</span><span class="bar" style="--n:8" role="img" aria-label="8 個營位剩 2 個"><i class="o"></i><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 2</b></div></div><div class="zone"><div class="zh"><h4>車泊</h4><span class="price">$1,000<small>/晚</small></span></div><p class="zd">車子停在營位上，可接電・共 6 個</p><div class="night ok"><span class="nl">週五晚</span><span class="bar" style="--n:6" role="img" aria-label="6 個營位剩 3 個"><i class="o"></i><i class="o"></i><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 3</b></div><div class="night full"><span class="nl">週六晚</span><span class="bar" style="--n:6" role="img" aria-label="6 個營位剩 0 個"><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">額滿</b></div></div></div></section><section class="wk" aria-label="12/11到12/12"><header class="wkh"><div><span class="eyebrow">三週後</span><h3>12/11 – 12/12</h3></div><span class="range">週五・週六</span></header><div class="zones"><div class="zone"><div class="zh"><h4>草地</h4><span class="price">$1,200<small>/晚</small></span></div><p class="zd">平坦草地，可停車在旁・共 10 個</p><div class="night ok"><span class="nl">週五晚</span><span class="bar" style="--n:10" role="img" aria-label="10 個營位剩 7 個"><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 7</b></div><div class="night ok"><span class="nl">週六晚</span><span class="bar" style="--n:10" role="img" aria-label="10 個營位剩 4 個"><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 4</b></div></div><div class="zone"><div class="zh"><h4>雨棚</h4><span class="price">$1,600<small>/晚</small></span></div><p class="zd">有頂棚，下雨也能搭・共 8 個</p><div class="night low"><span class="nl">週五晚</span><span class="bar" style="--n:8" role="img" aria-label="8 個營位剩 2 個"><i class="o"></i><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 2</b></div><div class="night low"><span class="nl">週六晚</span><span class="bar" style="--n:8" role="img" aria-label="8 個營位剩 1 個"><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 1</b></div></div><div class="zone"><div class="zh"><h4>棧板</h4><span class="price">$1,500<small>/晚</small></span></div><p class="zd">木棧板營位，排水好・共 8 個</p><div class="night ok"><span class="nl">週五晚</span><span class="bar" style="--n:8" role="img" aria-label="8 個營位剩 3 個"><i class="o"></i><i class="o"></i><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 3</b></div><div class="night low"><span class="nl">週六晚</span><span class="bar" style="--n:8" role="img" aria-label="8 個營位剩 2 個"><i class="o"></i><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 2</b></div></div><div class="zone"><div class="zh"><h4>車泊</h4><span class="price">$1,000<small>/晚</small></span></div><p class="zd">車子停在營位上，可接電・共 6 個</p><div class="night low"><span class="nl">週五晚</span><span class="bar" style="--n:6" role="img" aria-label="6 個營位剩 2 個"><i class="o"></i><i class="o"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">剩 2</b></div><div class="night full"><span class="nl">週六晚</span><span class="bar" style="--n:6" role="img" aria-label="6 個營位剩 0 個"><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i><i class="x"></i></span><b class="cnt">額滿</b></div></div></div></section>
+
+  <div>
+    <h2>山上這一週的天氣</h2>
+    <p class="sub">苗栗縣泰安鄉的預報。黃底是週五、週六。</p>
+  </div>
+  <section class="weather" aria-label="山上未來一週天氣">
+    <ul class="strip"><li class="day"><span class="dn">今天</span><span class="dd">11/19</span><svg class="wi" viewBox="0 0 32 32" aria-hidden="true"><path d="M9 24h14a5 5 0 0 0 .6-10 7 7 0 0 0-13.4 1.8A4.6 4.6 0 0 0 9 24z"/></svg><span class="dt">陰時多雲</span><span class="tmp"><b>18°</b><em>12°</em></span><span class="rn">降雨 20%</span></li><li class="day we"><span class="dn">週五</span><span class="dd">11/20</span><svg class="wi" viewBox="0 0 32 32" aria-hidden="true"><path d="M9 24h14a5 5 0 0 0 .6-10 7 7 0 0 0-13.4 1.8A4.6 4.6 0 0 0 9 24z"/></svg><span class="dt">陰時多雲</span><span class="tmp"><b>15°</b><em>11°</em></span><span class="rn">降雨 20%</span></li><li class="day we"><span class="dn">週六</span><span class="dd">11/21</span><svg class="wi" viewBox="0 0 32 32" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 3v2M3 12h2M6 6l1.5 1.5M18 6l-1.5 1.5"/><path d="M11 25h12a4.5 4.5 0 0 0 .5-9 6 6 0 0 0-11.3 1.5A3.8 3.8 0 0 0 11 25z"/></svg><span class="dt">晴時多雲</span><span class="tmp"><b>19°</b><em>10°</em></span><span class="rn">降雨 0%</span></li><li class="day"><span class="dn">週日</span><span class="dd">11/22</span><svg class="wi" viewBox="0 0 32 32" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 3v2M3 12h2M6 6l1.5 1.5M18 6l-1.5 1.5"/><path d="M11 25h12a4.5 4.5 0 0 0 .5-9 6 6 0 0 0-11.3 1.5A3.8 3.8 0 0 0 11 25z"/></svg><span class="dt">晴時多雲</span><span class="tmp"><b>21°</b><em>10°</em></span><span class="rn">&nbsp;</span></li><li class="day"><span class="dn">週一</span><span class="dd">11/23</span><svg class="wi" viewBox="0 0 32 32" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 3v2M3 12h2M6 6l1.5 1.5M18 6l-1.5 1.5"/><path d="M11 25h12a4.5 4.5 0 0 0 .5-9 6 6 0 0 0-11.3 1.5A3.8 3.8 0 0 0 11 25z"/></svg><span class="dt">晴時多雲</span><span class="tmp"><b>22°</b><em>15°</em></span><span class="rn">&nbsp;</span></li><li class="day"><span class="dn">週二</span><span class="dd">11/24</span><svg class="wi" viewBox="0 0 32 32" aria-hidden="true"><path d="M9 18h14a5 5 0 0 0 .6-10 7 7 0 0 0-13.4 1.8A4.6 4.6 0 0 0 9 18z"/><path d="M11 22l-1.5 4M17 22l-1.5 4M23 22l-1.5 4"/></svg><span class="dt">多雲短暫陣雨</span><span class="tmp"><b>21°</b><em>15°</em></span><span class="rn">&nbsp;</span></li><li class="day"><span class="dn">週三</span><span class="dd">11/25</span><svg class="wi" viewBox="0 0 32 32" aria-hidden="true"><path d="M9 18h14a5 5 0 0 0 .6-10 7 7 0 0 0-13.4 1.8A4.6 4.6 0 0 0 9 18z"/><path d="M11 22l-1.5 4M17 22l-1.5 4M23 22l-1.5 4"/></svg><span class="dt">陰短暫雨</span><span class="tmp"><b>19°</b><em>15°</em></span><span class="rn">&nbsp;</span></li></ul>
+    <p class="wnote">資料來源：中央氣象署鄉鎮天氣預報，11/19 02:52取得。出發前天氣可能再變動。</p>
+  </section>
+
+  <footer>
+    <p>空位依 11/19 02:52的訂位表計算，已取消的訂位不算。</p>
+    <p>訂金未付的訂位仍先保留，逾期未付會釋出，空位可能再增加。</p>
+    <p>訂位請直接聯絡營區。</p>
+  </footer>
+</main>
+</div>
